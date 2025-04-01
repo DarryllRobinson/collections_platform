@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Outlet, useLoaderData } from "react-router";
+import { Outlet } from "react-router";
 import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
 import NavbarLayout from "../../navigation/NavbarLayout";
 import { globalLight, globalDark } from "../../theme/globalTheme"; // Import global themes
+import { userService } from "features/users/user.service";
 
 // Need to check if the user is logged in with a silent check to the db
-// export async function layoutLoader() {
-//   const user = await userService.refreshToken();
-//   // console.log('layoutLoader user: ', user ? user : 'Nothing');
-//   return { user };
-// }
+export async function layoutLoader() {
+  const user = await userService.refreshToken();
+  console.log("layoutLoader user: ", user ? user : "Nothing");
+  return { user };
+}
 
 export default function Layout() {
   // Light theme is default theme
