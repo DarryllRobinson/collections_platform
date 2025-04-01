@@ -3,8 +3,8 @@ import { Outlet, useLoaderData } from "react-router";
 import { Box, Container, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
-import NavbarLayout from "../navigation/NavbarLayout";
-import { globalLight, globalDark } from "../globalTheme"; // Import global themes
+import NavbarLayout from "../../navigation/NavbarLayout";
+import { globalLight, globalDark } from "../../theme/globalTheme"; // Import global themes
 
 // Need to check if the user is logged in with a silent check to the db
 // export async function layoutLoader() {

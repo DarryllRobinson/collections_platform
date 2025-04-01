@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { Adb as AdbIcon, Menu as MenuIcon } from "@mui/icons-material";
 import MaterialUISwitch from "./MaterialUISwitch";
-// import { userService } from "../../features/Users/user.service";
+import { userService } from "../features/users/user.service";
 import { Link as RouterLink, useNavigate } from "react-router";
 
 // Constants
@@ -33,7 +33,7 @@ function ResponsiveAppBar(props) {
   const { checked, onChange } = props;
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const user = true; //userService.userValue;
+  const user = userService.userValue;
   const navigate = useNavigate();
 
   const profileMenu = [
@@ -47,9 +47,9 @@ function ResponsiveAppBar(props) {
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
   const handleLogout = () => {
-    // userService.logout();
+    userService.logout();
     handleCloseUserMenu();
-    alert("Under development"); //navigate("/signin");
+    navigate("/signin");
   };
 
   // Render Menu Items
