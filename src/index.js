@@ -2,10 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
+import LandingPage from "pages/LandingPage";
+import Layout from "pages/Layout";
+import ErrorPage from "navigation/ErrorPage";
+
 const router = createBrowserRouter([
   {
     path: "",
-    element: <h1>Welcome to the Collections Platform</h1>,
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
+    ],
   },
 ]);
 
