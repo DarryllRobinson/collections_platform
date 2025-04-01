@@ -10,7 +10,7 @@ import { userService } from "features/users/user.service";
 // Need to check if the user is logged in with a silent check to the db
 export async function layoutLoader() {
   const user = await userService.refreshToken();
-  console.log("layoutLoader user: ", user ? user : "Nothing");
+  // console.log("layoutLoader user: ", user ? user : "Nothing");
   return { user };
 }
 
@@ -54,7 +54,6 @@ export default function Layout() {
       >
         <NavbarLayout checked={isDarkTheme} onChange={changeTheme} />
         <Outlet context={{ boardThemes: { globalLight, globalDark } }} />
-        {/* Pass board themes */}
         <Box
           component="footer"
           sx={{
