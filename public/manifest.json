@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Collections Platform",
+  "name": "Collections Platform",
+  "description": "A platform for managing collections.",
   "icons": [
     {
       "src": "favicon.ico",
