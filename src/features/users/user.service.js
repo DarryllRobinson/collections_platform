@@ -56,14 +56,13 @@ function logout() {
 }
 
 // Refresh the user's JWT token
-function refreshToken() {
-  return fetchWrapper.post(`${baseUrl}/refresh-token`, {}).then((user) => {
-    if (user?.email) {
-      userSubject.next(user);
-      startRefreshTokenTimer();
-      return user;
-    }
-  });
+async function refreshToken() {
+  const user = await fetchWrapper.post(`${baseUrl}/refresh-token`, {});
+  if (user?.email) {
+    userSubject.next(user);
+    startRefreshTokenTimer();
+    return user;
+  }
 }
 
 // Register a new user

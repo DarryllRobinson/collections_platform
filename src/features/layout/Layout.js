@@ -53,7 +53,7 @@ export default function Layout() {
         }}
       >
         <NavbarLayout checked={isDarkTheme} onChange={changeTheme} />
-        <Outlet context={{ boardThemes: { globalLight, globalDark } }} />
+        <Outlet />
         <Box
           component="footer"
           sx={{

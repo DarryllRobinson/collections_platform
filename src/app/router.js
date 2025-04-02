@@ -5,6 +5,7 @@ import ErrorPage from "features/error/ErrorPage";
 import SignIn, { loginAction } from "features/users/SignIn";
 import LoginErrorPage from "features/users/LoginErrorPage";
 import Dashboard from "features/users/Dashboard";
+import Clients, { clientsLoader } from "features/clients/Clients";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
         action: loginAction,
       },
       { path: "/dashboard", element: <Dashboard /> },
+      {
+        path: "/clients",
+        element: <Clients />,
+        loader: clientsLoader,
+      },
     ],
   },
 ]);

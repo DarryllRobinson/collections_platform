@@ -8,78 +8,71 @@ export const fetchWrapper = {
   delete: _delete,
 };
 
-async function request(url, method, body = null) {
-  const headers = { "Content-Type": "application/json", ...authHeader(url) };
-  const requestOptions = {
-    method,
-    headers,
-    credentials: "include",
-    ...(body && { body: JSON.stringify(body) }),
-  };
-
-  const response = await fetch(url, requestOptions);
-  return handleResponse(response);
-}
-
-async function get(url) {
-  const headers = { "Content-Type": "application/json" };
-  const user = userService.userValue;
-
-  if (user?.jwtToken) {
-    headers.Authorization = `Bearer ${user.jwtToken}`; // Add Authorization header
-  }
-
+function get(url) {
   const requestOptions = {
     method: "GET",
-    credentials: "include", // Ensure credentials are included
-    headers,
+    headers: authHeader(url),
   };
-
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-async function post(url, body) {
-  return request(url, "POST", body);
+function post(url, body) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...authHeader(url) },
+    credentials: "include",
+    body: JSON.stringify(body),
+  };
+  return fetch(url, requestOptions).then(handleResponse);
 }
 
-async function put(url, body) {
-  return request(url, "PUT", body);
+function put(url, body) {
+  const requestOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...authHeader(url) },
+    body: JSON.stringify(body),
+  };
+  return fetch(url, requestOptions).then(handleResponse);
 }
 
-async function _delete(url) {
-  return request(url, "DELETE");
+// prefixed with underscored because delete is a reserved word in javascript
+function _delete(url) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: authHeader(url),
+  };
+  return fetch(url, requestOptions).then(handleResponse);
 }
 
-// Helper functions
+// helper functions
+
 function authHeader(url) {
+  // return auth header with jwt if user is logged in and request is to the api url
   const user = userService.userValue;
+  // console.log("authHeader user", user);
   const isLoggedIn = user && user.jwtToken;
   const isApiUrl = url.startsWith(config.apiUrl);
-  return isLoggedIn && isApiUrl
-    ? { Authorization: `Bearer ${user.jwtToken}` }
-    : {};
+  if (isLoggedIn && isApiUrl) {
+    return { Authorization: `Bearer ${user.jwtToken}` };
+  } else {
+    return {};
+  }
 }
 
 function handleResponse(response) {
-  return response
-    .text()
-    .then((text) => {
-      const data = text && JSON.parse(text);
+  return response.text().then((text) => {
+    const data = text && JSON.parse(text);
 
-      if (!response.ok) {
-        if ([401, 403].includes(response.status) && userService.userValue) {
-          userService.logout();
-        }
-
-        const error = (data && data.message) || response.statusText;
-        console.error(`API Error: ${response.status}`);
-        return Promise.reject(new Error(error));
+    if (!response.ok) {
+      if ([401, 403].includes(response.status) && userService.userValue) {
+        // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+        userService.logout();
       }
 
-      return data;
-    })
-    .catch((error) => {
-      console.error("An error occurred while processing the API response.");
-      throw error;
-    });
+      const error = (data && data.message) || response.statusText;
+      return Promise.reject(error);
+    }
+
+    return data;
+  });
 }
