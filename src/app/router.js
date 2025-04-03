@@ -6,6 +6,8 @@ import SignIn, { loginAction } from "features/users/SignIn";
 import LoginErrorPage from "features/users/LoginErrorPage";
 import Dashboard from "features/users/Dashboard";
 import Clients, { clientsLoader } from "features/clients/Clients";
+import UserAdmin, { userAdminLoader } from "features/users/admin/Admin";
+import UserCreate, { userCreateAction } from "features/users/admin/Create";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,16 @@ const router = createBrowserRouter([
         path: "/clients",
         element: <Clients />,
         loader: clientsLoader,
+      },
+      {
+        path: "/users",
+        element: <UserAdmin />,
+        loader: userAdminLoader,
+      },
+      {
+        path: "/create",
+        element: <UserCreate />,
+        action: userCreateAction,
       },
     ],
   },

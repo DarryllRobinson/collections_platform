@@ -21,7 +21,8 @@ import { Link as RouterLink, useNavigate } from "react-router";
 // Constants
 const pagesLoggedIn = [
   { label: "Clients", action: (navigate) => navigate("/clients") },
-  { label: "Menu Option 2", action: () => alert("Under development") }, //(navigate) => navigate("/competitions") },
+  { label: "User Admin", action: (navigate) => navigate("/users") },
+  { label: "User Create", action: (navigate) => navigate("/create") },
   { label: "Menu Option 3", action: () => alert("Under development") }, //(navigate) => navigate("/boards") },
   { label: "Menu Option 4", action: () => alert("Under development") },
 ];
@@ -37,7 +38,7 @@ function ResponsiveAppBar(props) {
   const navigate = useNavigate();
 
   const profileMenu = [
-    { label: "Dashboard", action: () => alert("Under development") }, //(navigate) => navigate("/dashboard") },
+    { label: "Dashboard", action: (navigate) => navigate("/dashboard") },
     // { label: 'Logout', action: () => onclick={handleLogout} } // Can't get this to work
   ];
 
