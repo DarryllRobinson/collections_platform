@@ -20,7 +20,7 @@ import { Link as RouterLink, useNavigate } from "react-router";
 
 // Constants
 const pagesLoggedIn = [
-  { label: "Menu Option 1", action: () => alert("Under development") },
+  { label: "Clients", action: (navigate) => navigate("/clients") },
   { label: "Menu Option 2", action: () => alert("Under development") }, //(navigate) => navigate("/competitions") },
   { label: "Menu Option 3", action: () => alert("Under development") }, //(navigate) => navigate("/boards") },
   { label: "Menu Option 4", action: () => alert("Under development") },

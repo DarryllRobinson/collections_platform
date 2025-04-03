@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
 import { clientService } from "./clients.service";
 
@@ -12,7 +12,7 @@ export async function clientsLoader() {
 }
 
 export default function Clients() {
-  const clients = useLoaderData();
+  const { clients } = useLoaderData();
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -21,10 +21,10 @@ export default function Clients() {
       </Typography>
       <List>
         {clients.map((client) => (
-          <ListItem key={client.customerRefNo}>
+          <ListItem key={client.id}>
             <ListItemText
-              primary={client.customerName}
-              secondary={`Ref No: ${client.customerRefNo}`}
+              primary={client.clientName}
+              secondary={`Ref No: ${client.id}`}
             />
           </ListItem>
         ))}
