@@ -9,6 +9,9 @@ import Clients, { clientsLoader } from "features/clients/Clients";
 import UserAdmin, { userAdminLoader } from "features/users/admin/Admin";
 import UserCreate, { userCreateAction } from "features/users/admin/Create";
 import Customers, { customersLoader } from "features/customers/Customers";
+import Collections, {
+  collectionsLoader,
+} from "features/collections/Collections";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +47,11 @@ const router = createBrowserRouter([
         action: userCreateAction,
       },
       { path: "/customers", element: <Customers />, loader: customersLoader },
+      {
+        path: "/collections",
+        element: <Collections />,
+        loader: collectionsLoader,
+      },
     ],
   },
 ]);

@@ -24,7 +24,7 @@ const pagesLoggedIn = [
   { label: "User Admin", action: (navigate) => navigate("/users") },
   { label: "User Create", action: (navigate) => navigate("/create") },
   { label: "Customers", action: (navigate) => navigate("/customers") },
-  { label: "Menu Option 4", action: () => alert("Under development") },
+  { label: "Collections", action: (navigate) => navigate("/collections") },
 ];
 const pagesLoggedOut = [
   { label: "Menu Option 1", action: () => alert("Under development") },
