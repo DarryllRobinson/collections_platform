@@ -23,7 +23,7 @@ const pagesLoggedIn = [
   { label: "Clients", action: (navigate) => navigate("/clients") },
   { label: "User Admin", action: (navigate) => navigate("/users") },
   { label: "User Create", action: (navigate) => navigate("/create") },
-  { label: "Menu Option 3", action: () => alert("Under development") }, //(navigate) => navigate("/boards") },
+  { label: "Customers", action: (navigate) => navigate("/customers") },
   { label: "Menu Option 4", action: () => alert("Under development") },
 ];
 const pagesLoggedOut = [

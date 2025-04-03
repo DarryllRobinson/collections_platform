@@ -3,7 +3,7 @@ import { fetchWrapper } from "../../utils/fetch-wrapper";
 
 jest.mock("../../_helpers/fetch-wrapper");
 jest.mock("../../_config/config", () => ({
-  apiUrl: "http://localhost:4000",
+  apiUrl: "http://localhost:4001",
 }));
 
 describe("userService", () => {
@@ -26,7 +26,7 @@ describe("userService", () => {
     });
 
     expect(fetchWrapper.post).toHaveBeenCalledWith(
-      "http://localhost:4000/users/authenticate",
+      "http://localhost:4001/users/authenticate",
       { email: "test@example.com", password: "password" }
     );
     expect(result).toEqual(mockUser);
@@ -57,7 +57,7 @@ describe("userService", () => {
     userService.logout();
 
     expect(fetchWrapper.post).toHaveBeenCalledWith(
-      "http://localhost:4000/users/revoke-token",
+      "http://localhost:4001/users/revoke-token",
       mockUser
     );
     expect(userService.userValue).toBeNull();
@@ -75,7 +75,7 @@ describe("userService", () => {
     const result = await userService.refreshToken();
 
     expect(fetchWrapper.post).toHaveBeenCalledWith(
-      "http://localhost:4000/users/refresh-token",
+      "http://localhost:4001/users/refresh-token",
       {}
     );
     expect(result).toEqual(mockUser);

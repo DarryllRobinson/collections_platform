@@ -7,22 +7,26 @@ const userSubject = new BehaviorSubject(null);
 const baseUrl = `${config.apiUrl}/users`;
 
 export const userService = {
-  login, // Authenticate the user and start a refresh token timer
-  logout, // Log out the user and clear session data
-  refreshToken, // Refresh the user's JWT token
-  register, // Register a new user
-  verifyEmail, // Verify the user's email address
-  forgotPassword, // Send a password reset email
-  validateResetToken, // Validate the password reset token
-  resetPassword, // Reset the user's password
-  getAll, // Fetch all users
-  getById, // Fetch a user by ID
-  create, // Create a new user
-  update, // Update an existing user
-  delete: _delete, // Delete a user
-  user: userSubject.asObservable(), // Observable for the current user
+  login,
+  logout,
+  refreshToken,
+  register,
+  verifyEmail,
+  forgotPassword,
+  validateResetToken,
+  resetPassword,
+  setNewPassword,
+  deactivateUser,
+  reactivateUser,
+  resendInvitation,
+  getAll,
+  getById,
+  create,
+  update,
+  delete: _delete,
+  user: userSubject.asObservable(),
   get userValue() {
-    return userSubject.value; // Get the current user value
+    return userSubject.value;
   },
   _userSubject: userSubject, // Expose userSubject for testing
 };
@@ -39,30 +43,20 @@ function login(params) {
   });
 }
 
-// Log out the user and clear session data
 function logout() {
-  // Revoke token only if userSubject.value is not null
-  if (userSubject.value) {
-    fetchWrapper
-      .post(`${baseUrl}/revoke-token`, userSubject.value)
-      .catch(() => {
-        console.error("Failed to revoke token during logout.");
-      });
-  }
+  // revoke token, stop refresh timer, publish null to user subscribers and redirect to login page
+  fetchWrapper.post(`${baseUrl}/revoke-token`, {});
   stopRefreshTokenTimer();
   userSubject.next(null);
-  localStorage.removeItem("user");
-  sessionStorage.removeItem("user");
 }
 
 // Refresh the user's JWT token
-async function refreshToken() {
-  const user = await fetchWrapper.post(`${baseUrl}/refresh-token`, {});
-  if (user?.email) {
+function refreshToken() {
+  return fetchWrapper.post(`${baseUrl}/refresh-token`, {}).then((user) => {
     userSubject.next(user);
     startRefreshTokenTimer();
     return user;
-  }
+  });
 }
 
 // Register a new user
@@ -95,6 +89,26 @@ function resetPassword({ token, password, confirmPassword }) {
     password,
     confirmPassword,
   });
+}
+
+function setNewPassword({ token, password, confirmPassword }) {
+  return fetchWrapper.post(`/users/set-password`, {
+    token,
+    password,
+    confirmPassword,
+  });
+}
+
+function deactivateUser(id) {
+  return fetchWrapper.put(`/users/deactivate/${id}`);
+}
+
+function reactivateUser(id) {
+  return fetchWrapper.put(`/users/reactivate/${id}`);
+}
+
+function resendInvitation(id) {
+  return fetchWrapper.post(`/users/resend-invitation/${id}`);
 }
 
 // Fetch all users

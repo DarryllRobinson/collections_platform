@@ -8,6 +8,7 @@ import Dashboard from "features/users/Dashboard";
 import Clients, { clientsLoader } from "features/clients/Clients";
 import UserAdmin, { userAdminLoader } from "features/users/admin/Admin";
 import UserCreate, { userCreateAction } from "features/users/admin/Create";
+import Customers, { customersLoader } from "features/customers/Customers";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
         element: <UserCreate />,
         action: userCreateAction,
       },
+      { path: "/customers", element: <Customers />, loader: customersLoader },
     ],
   },
 ]);

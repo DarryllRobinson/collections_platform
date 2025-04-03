@@ -1,8 +1,8 @@
 import config from "../../_config/config";
 import { fetchWrapper } from "../../utils/fetch-wrapper";
-const baseUrl = `${config.apiUrl}/clients`;
+const baseUrl = `${config.apiUrl}/customers`;
 
-export const clientService = {
+export const customerService = {
   getAll,
   //   getById,
   //   create,
@@ -11,6 +11,5 @@ export const clientService = {
 };
 
 function getAll() {
-  // return fetchWrapper.get(baseUrl);
-  return fetchWrapper.post(baseUrl);
+  return fetchWrapper.get(baseUrl);
 }
