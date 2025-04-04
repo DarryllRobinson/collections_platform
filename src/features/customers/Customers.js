@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router"; // Use react-router
 import {
   Box,
   Typography,
@@ -10,9 +10,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  useMediaQuery, // Correct import for useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles"; // Import global theme
+import { useTheme } from "@mui/material/styles";
 import { customerService } from "./customer.service";
 
 export async function customersLoader() {
@@ -25,9 +25,9 @@ export async function customersLoader() {
 
 export default function Customers() {
   const { customers } = useLoaderData();
-  // console.log("Customers:", customers);
-  const theme = useTheme(); // Access global theme
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check for small screens
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate(); // Use navigate for programmatic navigation
 
   return (
     <Box
@@ -44,7 +44,7 @@ export default function Customers() {
         sx={{
           color: theme.palette.text.primary,
           fontWeight: theme.typography.fontWeightBold,
-          textAlign: isSmallScreen ? "center" : "left", // Center text on small screens
+          textAlign: isSmallScreen ? "center" : "left",
         }}
       >
         Customer Snapshot
@@ -55,7 +55,7 @@ export default function Customers() {
           marginTop: theme.spacing(2),
           borderRadius: theme.shape.borderRadius,
           boxShadow: theme.shadows[1],
-          overflowX: "auto", // Ensure responsiveness for small screens
+          overflowX: "auto",
         }}
       >
         <Table>
@@ -69,11 +69,11 @@ export default function Customers() {
                     backgroundColor:
                       theme.palette.mode === "dark"
                         ? theme.palette.grey[800]
-                        : theme.palette.grey[200], // Adjust header background for dark mode
+                        : theme.palette.grey[200],
                     color:
                       theme.palette.mode === "dark"
                         ? theme.palette.text.primary
-                        : theme.palette.text.secondary, // Adjust text color for readability
+                        : theme.palette.text.secondary,
                   }}
                 >
                   {field}
@@ -85,14 +85,19 @@ export default function Customers() {
             {customers.map((customer, index) => (
               <TableRow
                 key={index}
+                onClick={() => navigate(`/accounts/${customer.customerRefNo}`)} // Navigate on row click
                 sx={{
+                  cursor: "pointer", // Indicate clickable row
                   backgroundColor:
                     customer.amountDue > 0
                       ? theme.palette.error.light
-                      : "inherit", // Shade row if Amount Due > 0
+                      : "inherit",
+                  "&:hover": {
+                    backgroundColor: theme.palette.action.hover, // Add hover effect
+                  },
                 }}
               >
-                {Object.values(customer).map((value, idx) => (
+                {Object.entries(customer).map(([key, value], idx) => (
                   <TableCell
                     key={idx}
                     sx={{
