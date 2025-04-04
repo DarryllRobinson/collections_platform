@@ -15,9 +15,11 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { accountService } from "./account.service";
 import { caseService } from "features/cases/case.service";
+import { userService } from "features/users/user.service";
 
 export async function accountLoader({ params }) {
   // console.log("Account Loader Params:", params);
+  await userService.refreshToken();
   const account = await accountService.getById({
     id: params.accountId,
   });

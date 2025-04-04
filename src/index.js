@@ -5,7 +5,12 @@ import router from "./app/router";
 import { userService } from "features/users/user.service";
 
 // attempt silent token refresh before startup
-userService.refreshToken().finally(startApp);
+userService
+  .refreshToken()
+  // .then(() => {
+  //   console.log("startApp userService.userValue", userService.userValue);
+  // })
+  .finally(startApp);
 
 function startApp() {
   // console.log("startApp", userService.userValue);

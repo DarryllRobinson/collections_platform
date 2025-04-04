@@ -10,10 +10,21 @@ export const fetchWrapper = {
   delete: _delete,
 };
 
-function get(url) {
+async function get(url) {
+  // console.log("userService.userValue, url", userService.userValue, url);
+  // console.log(
+  //   "firstValueFrom(userService.user)",
+  //   await firstValueFrom(userService.user)
+  // );
+  let headers = authHeader(url);
+  headers = {
+    "Content-Type": "application/json",
+    ...headers,
+  };
+  // console.log("post headers", headers);
   const requestOptions = {
     method: "GET",
-    headers: authHeader(url),
+    headers,
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
@@ -77,14 +88,13 @@ function _delete(url) {
 
 // helper functions
 
-async function authHeader(url) {
+function authHeader(url) {
   // return auth header with jwt if user is logged in and request is to the api url
-  const user = await firstValueFrom(userService.user);
-  // console.log("authHeader user", user);
+  // const user = await firstValueFrom(userService.user);
+  const user = userService.userValue;
   const isLoggedIn = user && user.jwtToken;
   const isApiUrl = url.startsWith(config.apiUrl);
   if (isLoggedIn && isApiUrl) {
-    // console.log("authHeader user.jwtToken", user.jwtToken);
     return { Authorization: `Bearer ${user.jwtToken}` };
   } else {
     return {};

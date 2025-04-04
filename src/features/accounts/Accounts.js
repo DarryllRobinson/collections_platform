@@ -14,8 +14,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles"; // Import global theme
 import { accountService } from "./account.service";
+import { userService } from "features/users/user.service";
 
 export async function accountsLoader() {
+  await userService.refreshToken();
   const accounts = await accountService.getAll();
   if (!accounts) {
     throw new Response("Not Found", { status: 404 });

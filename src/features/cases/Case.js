@@ -14,8 +14,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { caseService } from "./case.service";
+import { userService } from "features/users/user.service";
 
 export async function caseLoader({ params }) {
+  await userService.refreshToken();
   const record = await caseService.getById({
     id: params.caseNumber,
   });

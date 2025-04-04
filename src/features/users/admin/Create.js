@@ -14,6 +14,7 @@ import {
 import { userService } from "../user.service";
 
 export async function userCreateAction({ request }) {
+  await userService.refreshToken();
   const formData = await request.formData();
   let userDetails = Object.fromEntries(formData);
   console.log("User Details:", userDetails);

@@ -14,8 +14,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles"; // Import global theme
 import { collectionService } from "./collection.service";
+import { userService } from "features/users/user.service";
 
 export async function collectionsLoader() {
+  await userService.refreshToken();
   const collections = await collectionService.getAll();
   if (!collections) {
     throw new Response("Not Found", { status: 404 });

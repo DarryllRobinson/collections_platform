@@ -16,6 +16,7 @@ import { useTheme } from "@mui/material/styles"; // Import global theme
 import { userService } from "../user.service";
 
 export async function userAdminLoader() {
+  await userService.refreshToken();
   const users = await userService.getAll();
   if (!users) {
     throw new Response("Not Found", { status: 404 });

@@ -2,8 +2,10 @@ import React from "react";
 import { useLoaderData } from "react-router";
 import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
 import { clientService } from "./clients.service";
+import { userService } from "features/users/user.service";
 
 export async function clientsLoader() {
+  await userService.refreshToken();
   const clients = await clientService.getAll();
   if (!clients) {
     throw new Response("Not Found", { status: 404 });

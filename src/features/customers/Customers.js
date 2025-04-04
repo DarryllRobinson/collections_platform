@@ -14,8 +14,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { customerService } from "./customer.service";
+import { userService } from "features/users/user.service";
 
 export async function customersLoader() {
+  await userService.refreshToken();
   const customers = await customerService.getSnapshot();
   if (!customers) {
     throw new Response("Not Found", { status: 404 });

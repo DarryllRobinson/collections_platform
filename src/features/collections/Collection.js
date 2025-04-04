@@ -13,8 +13,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles"; // Import global theme
 import { collectionService } from "./collection.service";
+import { userService } from "features/users/user.service";
 
 export async function collectionLoader({ params }) {
+  await userService.refreshToken();
   const collection = await collectionService.getById({
     id: params.collectionId,
   });
