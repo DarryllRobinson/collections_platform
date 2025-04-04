@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import {
   Box,
   Typography,
@@ -9,9 +9,10 @@ import {
   TableContainer,
   TableRow,
   Paper,
-  useMediaQuery, // Correct import for useMediaQuery
+  Button,
+  useMediaQuery,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles"; // Import global theme
+import { useTheme } from "@mui/material/styles";
 import { accountService } from "./account.service";
 
 export async function accountLoader({ params }) {
@@ -31,6 +32,7 @@ export default function Account() {
   const { account } = useLoaderData();
   const theme = useTheme(); // Access global theme
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check for small screens
+  const navigate = useNavigate();
 
   if (!account) {
     return (
@@ -69,6 +71,14 @@ export default function Account() {
       >
         Account Record {account.caseNumber}
       </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ marginBottom: theme.spacing(2) }}
+        onClick={() => navigate(`/case/${account.accountNumber}`)} // Navigate to Case.js with accountNumber
+      >
+        Open Case
+      </Button>
       <TableContainer
         component={Paper}
         sx={{
