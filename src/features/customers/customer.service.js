@@ -4,6 +4,7 @@ const baseUrl = `${config.apiUrl}/customers`;
 
 export const customerService = {
   getAll,
+  getSnapshot,
   //   getById,
   //   create,
   //   update,
@@ -12,4 +13,8 @@ export const customerService = {
 
 function getAll() {
   return fetchWrapper.get(baseUrl);
+}
+
+function getSnapshot() {
+  return fetchWrapper.get(`${baseUrl}/snapshot`);
 }

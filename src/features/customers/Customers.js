@@ -16,7 +16,7 @@ import { useTheme } from "@mui/material/styles"; // Import global theme
 import { customerService } from "./customer.service";
 
 export async function customersLoader() {
-  const customers = await customerService.getAll();
+  const customers = await customerService.getSnapshot();
   if (!customers) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -25,6 +25,7 @@ export async function customersLoader() {
 
 export default function Customers() {
   const { customers } = useLoaderData();
+  // console.log("Customers:", customers);
   const theme = useTheme(); // Access global theme
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check for small screens
 
@@ -46,7 +47,7 @@ export default function Customers() {
           textAlign: isSmallScreen ? "center" : "left", // Center text on small screens
         }}
       >
-        Admin - Customer List
+        Customer Snapshot
       </Typography>
       <TableContainer
         component={Paper}
@@ -82,7 +83,15 @@ export default function Customers() {
           </TableHead>
           <TableBody>
             {customers.map((customer, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                sx={{
+                  backgroundColor:
+                    customer.amountDue > 0
+                      ? theme.palette.error.light
+                      : "inherit", // Shade row if Amount Due > 0
+                }}
+              >
                 {Object.values(customer).map((value, idx) => (
                   <TableCell
                     key={idx}
