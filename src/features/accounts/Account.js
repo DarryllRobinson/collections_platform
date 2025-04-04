@@ -46,6 +46,9 @@ export default function Account() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check for small screens
   const navigate = useNavigate();
 
+  // Function to check if there are any cases
+  const hasCases = () => cases && cases.length > 0;
+
   if (!account) {
     return (
       <Box
@@ -87,9 +90,13 @@ export default function Account() {
         variant="contained"
         color="primary"
         sx={{ marginBottom: theme.spacing(2) }}
-        onClick={() => navigate(`/case/${account.accountNumber}`)} // Navigate to Case.js with accountNumber
+        onClick={
+          hasCases()
+            ? () => navigate(`/case/${account.accountNumber}`) // Navigate to Case.js
+            : () => alert("Under development") // Placeholder for creating a case
+        }
       >
-        Open Case
+        {hasCases() ? "Open Case" : "Create Case"}
       </Button>
       <TableContainer
         component={Paper}
