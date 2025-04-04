@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Outlet } from "react-router";
-import { Box, CssBaseline } from "@mui/material";
+import { Box, Container, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
 import NavbarLayout from "../../navigation/NavbarLayout";
 import { globalLight, globalDark } from "../../theme/globalTheme"; // Import global themes
 import { userService } from "features/users/user.service";
+import Copyright from "./Copyright";
 
 // Need to check if the user is logged in with a silent check to the db
 export async function layoutLoader() {
@@ -62,7 +63,11 @@ export default function Layout() {
             mt: "auto",
             backgroundColor: (theme) => theme.palette.background.paper,
           }}
-        ></Box>
+        >
+          <Container maxWidth="sm">
+            <Copyright sx={{ pt: 2 }} />
+          </Container>
+        </Box>
       </Box>
     </ThemeProvider>
   );

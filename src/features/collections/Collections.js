@@ -23,6 +23,9 @@ export async function collectionsLoader() {
   return { collections };
 }
 
+// TODO: Consider using a data grid for better performance and features
+// https://mui.com/x/react-data-grid/getting-started/overview/
+
 export default function Collections() {
   const { collections } = useLoaderData();
   console.log("Collections:", collections);
@@ -64,7 +67,7 @@ export default function Collections() {
           textAlign: isSmallScreen ? "center" : "left", // Center text on small screens
         }}
       >
-        Admin - Collection List
+        Collection List
       </Typography>
       <TableContainer
         component={Paper}

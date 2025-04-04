@@ -34,25 +34,25 @@ function getDocument(url, location) {
 }
 
 async function post(url, body) {
-  console.log(
-    "userService.userValue, url, body",
-    userService.userValue,
-    url,
-    body
-  );
+  // console.log(
+  //   "userService.userValue, url, body",
+  //   userService.userValue,
+  //   url,
+  //   body
+  // );
   let headers = await authHeader(url);
   headers = {
     "Content-Type": "application/json",
     ...headers,
   };
-  console.log("post headers", headers);
+  // console.log("post headers", headers);
   const requestOptions = {
     method: "POST",
     headers,
     credentials: "include",
     body: JSON.stringify(body),
   };
-  console.log("post requestOptions", requestOptions);
+  // console.log("post requestOptions", requestOptions);
   const response = await fetch(url, requestOptions);
   return handleResponse(response);
 }
@@ -80,11 +80,11 @@ function _delete(url) {
 async function authHeader(url) {
   // return auth header with jwt if user is logged in and request is to the api url
   const user = await firstValueFrom(userService.user);
-  console.log("authHeader user", user);
+  // console.log("authHeader user", user);
   const isLoggedIn = user && user.jwtToken;
   const isApiUrl = url.startsWith(config.apiUrl);
   if (isLoggedIn && isApiUrl) {
-    console.log("authHeader user.jwtToken", user.jwtToken);
+    // console.log("authHeader user.jwtToken", user.jwtToken);
     return { Authorization: `Bearer ${user.jwtToken}` };
   } else {
     return {};
