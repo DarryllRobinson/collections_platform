@@ -75,9 +75,9 @@ export default function Case() {
         variant="contained"
         color="primary"
         sx={{ marginBottom: theme.spacing(2) }}
-        onClick={() => navigate(`/case/${record.caseNumber}`)} // Navigate to Case.js with caseNumber
+        onClick={() => alert("Save case to be developed")} // Update the Case.js with caseNumber
       >
-        Open Case
+        Save Case
       </Button>
       <TableContainer
         component={Paper}
