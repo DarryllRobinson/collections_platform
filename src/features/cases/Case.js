@@ -13,40 +13,28 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { accountService } from "./account.service";
-import { caseService } from "features/cases/case.service";
+import { caseService } from "./case.service";
 
-export async function accountLoader({ params }) {
-  // console.log("Account Loader Params:", params);
-  const account = await accountService.getById({
-    id: params.accountId,
+export async function caseLoader({ params }) {
+  const record = await caseService.getById({
+    id: params.caseId,
   });
-  if (!account) {
-    throw new Response("Acount Not Found", { status: 404 });
+  if (!record) {
+    throw new Response("Not Found", { status: 404 });
   }
-
-  const cases = await caseService.getAllByAccountNumber({
-    id: params.accountId,
-  });
-  if (!cases) {
-    throw new Response("Cases Not Found", { status: 404 });
-  }
-
-  return { account, cases };
+  return { record };
 }
 
 // TODO: Consider using a data grid for better performance and features
 // https://mui.com/x/react-data-grid/getting-started/overview/
 
-export default function Account() {
-  const { account, cases } = useLoaderData();
-  console.log("Account:", account);
-  console.log("Cases:", cases);
+export default function Case() {
+  const { record } = useLoaderData();
   const theme = useTheme(); // Access global theme
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check for small screens
   const navigate = useNavigate();
 
-  if (!account) {
+  if (!record) {
     return (
       <Box
         sx={{
@@ -57,7 +45,7 @@ export default function Account() {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          Account Record Not Found
+          Case Record Not Found
         </Typography>
       </Box>
     );
@@ -81,13 +69,13 @@ export default function Account() {
           textAlign: isSmallScreen ? "center" : "left", // Center text on small screens
         }}
       >
-        Account Record {account.accountNumber}
+        Case Record {record.caseNumber}
       </Typography>
       <Button
         variant="contained"
         color="primary"
         sx={{ marginBottom: theme.spacing(2) }}
-        onClick={() => navigate(`/case/${account.accountNumber}`)} // Navigate to Case.js with accountNumber
+        onClick={() => navigate(`/case/${record.caseNumber}`)} // Navigate to Case.js with caseNumber
       >
         Open Case
       </Button>
@@ -102,7 +90,7 @@ export default function Account() {
       >
         <Table>
           <TableBody>
-            {Object.entries(account).map(([key, value]) => (
+            {Object.entries(record).map(([key, value]) => (
               <TableRow key={key}>
                 <TableCell
                   sx={{

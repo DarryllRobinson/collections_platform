@@ -15,6 +15,7 @@ import Collections, {
 import Collection, { collectionLoader } from "features/collections/Collection";
 import Accounts, { accountsLoader } from "features/accounts/Accounts";
 import Account, { accountLoader } from "features/accounts/Account";
+import Case, { caseLoader } from "features/cases/Case";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
         path: "/account/:accountId",
         element: <Account />,
         loader: accountLoader,
+      },
+      {
+        path: "/case/:caseNumber",
+        element: <Case />,
+        loader: caseLoader,
       },
     ],
   },
