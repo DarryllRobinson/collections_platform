@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import {
   Box,
   Typography,
@@ -31,6 +31,7 @@ export default function Accounts() {
   console.log("Accounts:", accounts);
   const theme = useTheme(); // Access global theme
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check for small screens
+  const navigate = useNavigate(); // Use navigate for programmatic navigation
 
   if (!accounts || accounts.length === 0) {
     return (
@@ -103,7 +104,20 @@ export default function Accounts() {
           </TableHead>
           <TableBody>
             {accounts.map((account, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                onClick={() => navigate(`/account/${account.accountNumber}`)} // Navigate on row click
+                sx={{
+                  cursor: "pointer", // Indicate clickable row
+                  backgroundColor:
+                    account.amountDue > 0
+                      ? theme.palette.error.light
+                      : "inherit",
+                  "&:hover": {
+                    backgroundColor: theme.palette.action.hover, // Add hover effect
+                  },
+                }}
+              >
                 {Object.values(account).map((value, idx) => (
                   <TableCell
                     key={idx}
