@@ -17,7 +17,7 @@ import { caseService } from "./case.service";
 
 export async function caseLoader({ params }) {
   const record = await caseService.getById({
-    id: params.caseId,
+    id: params.caseNumber,
   });
   if (!record) {
     throw new Response("Not Found", { status: 404 });

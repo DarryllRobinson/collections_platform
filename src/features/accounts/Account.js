@@ -92,7 +92,7 @@ export default function Account() {
         sx={{ marginBottom: theme.spacing(2) }}
         onClick={
           hasCases()
-            ? () => navigate(`/case/${account.accountNumber}`) // Navigate to Case.js
+            ? () => navigate(`/case/${cases[0].caseNumber}`) // Navigate to Case.js
             : () => alert("Under development") // Placeholder for creating a case
         }
       >
