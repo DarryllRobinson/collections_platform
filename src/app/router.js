@@ -13,6 +13,8 @@ import Collections, {
   collectionsLoader,
 } from "features/collections/Collections";
 import Collection, { collectionLoader } from "features/collections/Collection";
+import Accounts, { accountsLoader } from "features/accounts/Accounts";
+import Account, { accountLoader } from "features/accounts/Account";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +59,16 @@ const router = createBrowserRouter([
         path: "/collection/:collectionId",
         element: <Collection />,
         loader: collectionLoader,
+      },
+      {
+        path: "/accounts/:customerRefNo",
+        element: <Accounts />,
+        loader: accountsLoader,
+      },
+      {
+        path: "/account/:accountId",
+        element: <Account />,
+        loader: accountLoader,
       },
     ],
   },
