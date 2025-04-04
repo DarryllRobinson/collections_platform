@@ -4,7 +4,7 @@ const baseUrl = `${config.apiUrl}/collections`;
 
 export const collectionService = {
   getAll,
-  //   getById,
+  getById,
   //   create,
   //   update,
   //   delete: _delete,
@@ -12,4 +12,8 @@ export const collectionService = {
 
 function getAll() {
   return fetchWrapper.get(baseUrl);
+}
+
+function getById({ id }) {
+  return fetchWrapper.get(`${baseUrl}/${id}`);
 }
